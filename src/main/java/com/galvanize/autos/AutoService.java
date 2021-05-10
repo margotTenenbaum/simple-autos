@@ -21,4 +21,8 @@ public class AutoService {
     public AutosList getAllAutosByMake(String make) {
         return null;
     }
+
+    public Auto addAuto(Auto newAuto) {
+        return null;
+    }
 }
