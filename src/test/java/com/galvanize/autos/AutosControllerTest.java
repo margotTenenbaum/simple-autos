@@ -98,4 +98,14 @@ class AutosControllerTest {
                         .andExpect(jsonPath("year").value(2000));
     }
 
+    @Test
+    public void postAutoReturns400ForBadRequest() throws Exception {
+        Auto testAuto = new Auto("red", "Honda", "Civic", 2000, "XX89DM");
+        when(autoService.addAuto(any(Auto.class))).thenThrow(InvalidAutoException.class);
+        mockMvc.perform(post("/api/autos")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(testAuto)))
+                .andExpect(status().isBadRequest());
+    }
+
 }
