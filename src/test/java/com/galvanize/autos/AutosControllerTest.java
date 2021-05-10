@@ -1,6 +1,5 @@
 package com.galvanize.autos;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -14,11 +13,9 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @WebMvcTest(AutosController.class)
 class AutosControllerTest {
@@ -28,12 +25,6 @@ class AutosControllerTest {
     @MockBean
     AutoService autoService;
 
-//    AutosList testAutosList;
-//
-//    @BeforeEach
-//    void setup() {
-//        testAutosList = new AutosList();
-//    }
 
     @Test
     public void getAutosReturnsListOfAutos() throws Exception {
@@ -67,6 +58,28 @@ class AutosControllerTest {
                 .andExpect(jsonPath("$.autosList", hasSize(5)));
     }
 
+    @Test
+    public void getAutosWithColorParamReturnsListOfAutos() throws Exception {
+        List<Auto> testList = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            testList.add(new Auto("red", "Honda", "Civic", 2000 + i, "XX89DM"));
+        }
+        when(autoService.getAllAutosByColor(anyString())).thenReturn(new AutosList(testList));
+        mockMvc.perform(get("/api/autos?color=red"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.autosList", hasSize(5)));
+    }
 
+    @Test
+    public void getAutosWithMakeParamReturnsListOfAutos() throws Exception {
+        List<Auto> testList = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            testList.add(new Auto("red", "Honda", "Civic", 2000 + i, "XX89DM"));
+        }
+        when(autoService.getAllAutosByMake(anyString())).thenReturn(new AutosList(testList));
+        mockMvc.perform(get("/api/autos?make=Honda"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.autosList", hasSize(5)));
+    }
 
 }

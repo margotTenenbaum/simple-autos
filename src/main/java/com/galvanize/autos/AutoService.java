@@ -13,4 +13,12 @@ public class AutoService {
     public AutosList getAllAutos(String color, String make) {
         return null;
     }
+
+    public AutosList getAllAutosByColor(String color) {
+        return null;
+    }
+
+    public AutosList getAllAutosByMake(String make) {
+        return null;
+    }
 }
