@@ -1,0 +1,19 @@
+GET:/api/autos Returns status code 200 and the list of all autos when autos exist
+GET:/api/autos Returns 204 when no autos found
+GET:/api/autos?color=red Returns list of red cars
+GET:/api/autos?make=Ford Returns list of Ford cars
+GET:/api/autos?make=Ford&color=green Returns list of green Ford cars
+
+POST:/api/autos Returns status code 200 and the auto posted
+POST:/api/autos Returns status code 400 for a bad request
+
+GET:/api/autos/{vin} Returns status code 200 and auto with VIN number if it exists
+GET:/api/autos/{vin} Returns status code 204 if vehicle not found
+
+PATCH:/api/autos/{vin} Returns status code 200 and auto if auto updated successfully
+PATCH:/api/autos/{vin} Returns status code 204 and if auto not found
+PATCH:/api/autos/{vin} Returns status code 400 and if bad request
+
+DELETE:/api/autos/{vin} Returns status code 202 if auto deleted
+DELETE:/api/autos/{vin} Returns status code 204 if auto not found
+
