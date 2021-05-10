@@ -46,4 +46,12 @@ class AutosControllerTest {
                 .andExpect(jsonPath("$.autosList", hasSize(5)));
     }
 
+    @Test
+    public void getAutosReturnsNoContent() throws Exception {
+        when(autoService.getAllAutos()).thenReturn(new AutosList());
+
+        mockMvc.perform(get("/api/autos"))
+                .andExpect(status().isNoContent());
+    }
+
 }
