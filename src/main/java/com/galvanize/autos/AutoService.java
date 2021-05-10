@@ -10,4 +10,7 @@ public class AutoService {
     public AutosList getAllAutos() {
         return null;
     }
+    public AutosList getAllAutos(String color, String make) {
+        return null;
+    }
 }

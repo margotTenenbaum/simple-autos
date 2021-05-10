@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -53,5 +54,19 @@ class AutosControllerTest {
         mockMvc.perform(get("/api/autos"))
                 .andExpect(status().isNoContent());
     }
+
+    @Test
+    public void getAutosWithParamsReturnListOfAutos() throws Exception {
+        List<Auto> testList = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            testList.add(new Auto("red", "Honda", "Civic", 2000 + i, "XX89DM"));
+        }
+        when(autoService.getAllAutos(anyString(),anyString())).thenReturn(new AutosList(testList));
+        mockMvc.perform(get("/api/autos?color=red&make=Honda"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.autosList", hasSize(5)));
+    }
+
+
 
 }
