@@ -108,4 +108,17 @@ class AutosControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    public void getAutoWithVin_returnsCorrectAuto() throws Exception {
+        Auto testAuto = new Auto("red", "Honda", "Civic", 2000, "XX89DM");
+
+        when(autoService.getAuto(anyString())).thenReturn(testAuto);
+
+        mockMvc.perform(get("/api/autos/XX89DM"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("vin").value(testAuto.getVin()));
+    }
+
+
+
 }
