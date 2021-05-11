@@ -30,7 +30,7 @@ public class AutoService {
     }
 
     public Auto addAuto(Auto newAuto) {
-        return null;
+        return autosRepository.save(newAuto);
     }
 
     public Auto getAuto(String vin) {

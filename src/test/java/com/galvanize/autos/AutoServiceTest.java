@@ -10,6 +10,7 @@ import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -66,15 +67,11 @@ class AutoServiceTest {
     }
 
     @Test
-    void getAllAutosByColor() {
-    }
-
-    @Test
-    void getAllAutosByMake() {
-    }
-
-    @Test
-    void addAuto() {
+    void addAuto_valid_returnsAutoAdded() {
+        Auto testAuto = new Auto("red", "Honda", "Civic", 2000, "XX89DM");
+        when(autosRepository.save(any(Auto.class))).thenReturn(testAuto);
+        Auto auto = autoService.addAuto(testAuto);
+        assertThat(auto.getMake()).isEqualTo("Honda");
     }
 
     @Test
