@@ -33,4 +33,8 @@ public class AutoService {
     public Auto updateAuto(String vin, String color, String owner) {
         return null;
     }
+
+    public void deleteAuto(String vin) throws AutoNotFoundException {
+        return;
+    }
 }
