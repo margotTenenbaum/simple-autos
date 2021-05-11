@@ -7,9 +7,16 @@ import java.util.List;
 @Service
 public class AutoService {
 
-    public AutosList getAllAutos() {
-        return null;
+    AutosRepository autosRepository;
+
+    public AutoService(AutosRepository autosRepository) {
+        this.autosRepository = autosRepository;
     }
+
+    public AutosList getAllAutos() {
+        return new AutosList(autosRepository.findAll());
+    }
+
     public AutosList getAllAutos(String color, String make) {
         return null;
     }
