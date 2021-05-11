@@ -22,11 +22,11 @@ public class AutoService {
     }
 
     public AutosList getAllAutosByColor(String color) {
-        return null;
+        return new AutosList(autosRepository.findByColorContains(color));
     }
 
     public AutosList getAllAutosByMake(String make) {
-        return null;
+        return new AutosList(autosRepository.findByMakeContains(make));
     }
 
     public Auto addAuto(Auto newAuto) {

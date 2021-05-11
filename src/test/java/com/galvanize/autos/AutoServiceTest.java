@@ -46,6 +46,26 @@ class AutoServiceTest {
     }
 
     @Test
+    void testGetAllAutosByColor() {
+        Auto testAuto = new Auto("red", "Honda", "Civic", 2000, "XX89DM");
+        when(autosRepository.findByColorContains(anyString())).thenReturn(Arrays.asList(testAuto));
+        AutosList autosList = autoService.getAllAutosByColor("red");
+        assertThat(autosList).isNotNull();
+        assertThat(autosList.isEmpty()).isFalse();
+        assertEquals("red", autosList.getAutosList().get(0).getColor());
+    }
+
+    @Test
+    void testGetAllAutosByMake() {
+        Auto testAuto = new Auto("red", "Honda", "Civic", 2000, "XX89DM");
+        when(autosRepository.findByMakeContains(anyString())).thenReturn(Arrays.asList(testAuto));
+        AutosList autosList = autoService.getAllAutosByMake("Honda");
+        assertThat(autosList).isNotNull();
+        assertThat(autosList.isEmpty()).isFalse();
+        assertEquals("Honda", autosList.getAutosList().get(0).getMake());
+    }
+
+    @Test
     void getAllAutosByColor() {
     }
 
