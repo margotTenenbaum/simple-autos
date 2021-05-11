@@ -38,8 +38,10 @@ public class AutosController {
     }
 
     @GetMapping("/{vin}")
-    public Auto getAuto(@PathVariable String vin) {
-        return autoService.getAuto(vin);
+    public ResponseEntity<Auto> getAuto(@PathVariable String vin) {
+        Auto auto = autoService.getAuto(vin);
+        return auto == null ? ResponseEntity.noContent().build()
+                            : ResponseEntity.ok(auto);
     }
 
 
