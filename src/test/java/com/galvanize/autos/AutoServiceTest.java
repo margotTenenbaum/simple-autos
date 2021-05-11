@@ -75,7 +75,12 @@ class AutoServiceTest {
     }
 
     @Test
-    void getAuto() {
+    void getAutoByVin_withValidVin() {
+        Auto testAuto = new Auto("red", "Honda", "Civic", 2000, "XX89DM");
+        when(autosRepository.findByVin(anyString())).thenReturn(java.util.Optional.of(testAuto));
+        Auto auto = autoService.getAuto("XX89DM");
+        assertThat(auto).isNotNull();
+        assertEquals(auto.getVin(), "XX89DM");
     }
 
     @Test
