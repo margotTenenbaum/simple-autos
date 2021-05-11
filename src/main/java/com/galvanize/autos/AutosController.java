@@ -44,6 +44,15 @@ public class AutosController {
                             : ResponseEntity.ok(auto);
     }
 
+    @PatchMapping("/{vin}")
+    public ResponseEntity<Auto> updateAuto(@PathVariable String vin, @RequestBody UpdateAuto update) {
+        //catch incorrect update obj
+
+        Auto auto = autoService.updateAuto(vin, update.getColor(), update.getOwner());
+        return auto == null ? ResponseEntity.noContent().build()
+                            : ResponseEntity.ok(auto);
+    }
+
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)

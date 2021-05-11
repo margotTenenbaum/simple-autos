@@ -125,4 +125,21 @@ class AutosControllerTest {
 
     }
 
+    @Test
+    public void updateAuto_returnsUpdatedAuto() throws Exception {
+        Auto testAuto = new Auto("red", "Honda", "Civic", 2000, "XX89DM");
+        UpdateAuto testUpdate = new UpdateAuto("blue", "David");
+        testAuto.setColor(testUpdate.getColor());
+        testAuto.setOwner(testUpdate.getOwner());
+        when(autoService.updateAuto(anyString(), anyString(), anyString())).thenReturn(testAuto);
+        mockMvc.perform(patch("/api/autos/XX89DM")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(mapper.writeValueAsString(testUpdate)))
+                        .andExpect(status().isOk())
+                        .andExpect(jsonPath("color").value("blue"))
+                        .andExpect(jsonPath("owner").value("David"));
+
+    }
+
+
 }
