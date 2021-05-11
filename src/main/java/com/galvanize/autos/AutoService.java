@@ -3,6 +3,7 @@ package com.galvanize.autos;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AutoService {
@@ -38,7 +39,14 @@ public class AutoService {
     }
 
     public Auto updateAuto(String vin, String color, String owner) {
-        return null;
+        Optional<Auto> auto = autosRepository.findByVin(vin);
+        if(auto == null) {
+            return null;
+        } else {
+            auto.get().setColor(color);
+            auto.get().setOwner(owner);
+            return autosRepository.save(auto.get());
+        }
     }
 
     public void deleteAuto(String vin) throws AutoNotFoundException {

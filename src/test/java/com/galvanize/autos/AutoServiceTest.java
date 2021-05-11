@@ -85,6 +85,12 @@ class AutoServiceTest {
 
     @Test
     void updateAuto() {
+        Auto testAuto = new Auto("red", "Honda", "Civic", 2000, "XX89DM");
+        when(autosRepository.findByVin(anyString())).thenReturn(java.util.Optional.of(testAuto));
+        when(autosRepository.save(any(Auto.class))).thenReturn(testAuto);
+        Auto auto = autoService.updateAuto(testAuto.getVin(), "blue", "david");
+        assertThat(auto).isNotNull();
+        assertEquals(auto.getVin(), testAuto.getVin());
     }
 
     @Test
