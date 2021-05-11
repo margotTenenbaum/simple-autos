@@ -18,7 +18,7 @@ public class AutoService {
     }
 
     public AutosList getAllAutos(String color, String make) {
-        return null;
+        return new AutosList(autosRepository.findByColorContainsAndMakeContains(color, make));
     }
 
     public AutosList getAllAutosByColor(String color) {
