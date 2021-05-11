@@ -59,4 +59,9 @@ public class AutosController {
     public void invalidAutoExceptionHandler(InvalidAutoException e) {
     }
 
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public void invalidUpdateAutoExceptionHandler(InvalidUpdateAutoException e) {
+    }
+
 }

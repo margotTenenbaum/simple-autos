@@ -8,6 +8,10 @@ public class Auto {
     private int year;
     private String vin;
 
+    public Auto() {
+
+    }
+
     public Auto(String color, String make, String model, int year, String vin) {
         this.color = color;
         this.make = make;

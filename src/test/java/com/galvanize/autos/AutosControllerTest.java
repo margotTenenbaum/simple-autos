@@ -122,7 +122,6 @@ class AutosControllerTest {
         when(autoService.getAuto(anyString())).thenReturn(null);
         mockMvc.perform(get("/api/autos/XX91DM"))
                 .andExpect(status().isNoContent());
-
     }
 
     @Test
@@ -141,5 +140,23 @@ class AutosControllerTest {
 
     }
 
+    @Test
+    public void updateAutoWithVin_returns204WhenNoAutoFound() throws Exception {
+        UpdateAuto testUpdate = new UpdateAuto("blue", "David");
+        when(autoService.updateAuto(anyString(), anyString(), anyString())).thenReturn(null);
+        mockMvc.perform(patch("/api/autos/XX91DM")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(testUpdate)))
+                .andExpect(status().isNoContent());
+    }
 
+    @Test
+    public void updateAutoWithVin_returns400ForInvalidRequest() throws Exception {
+        UpdateAuto testUpdate = new UpdateAuto("blue", "David");
+        when(autoService.updateAuto(anyString(), anyString(), anyString())).thenThrow(InvalidUpdateAutoException.class);
+        mockMvc.perform(patch("/api/autos/XX89DM")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(testUpdate)))
+                .andExpect(status().isBadRequest());
+    }
 }
