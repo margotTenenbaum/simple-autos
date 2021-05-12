@@ -1,6 +1,14 @@
 package com.galvanize.autos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "autos")
 public class Auto {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String color;
     private String make;
     private String model;
