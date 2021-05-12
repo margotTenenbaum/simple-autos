@@ -57,5 +57,13 @@ class AutosApplicationTests {
         assertThat(response.getBody().isEmpty()).isFalse();
     }
 
+    @Test
+    void getAutos_returnsEmptyListOfAutos_whenNoneExist() {
+        autosRepository.deleteAll();
+        ResponseEntity<AutosList> response = testRestTemplate.getForEntity("/api/autos", AutosList.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+        assertThat(response.getBody()).isNull();
+    }
+
 
 }
