@@ -22,6 +22,7 @@ class AutosApplicationTests {
     @Autowired
     AutosRepository autosRepository;
 
+    Random r = new Random();
     List<Auto> testAutos;
     @BeforeEach
     void setup() {
@@ -31,7 +32,7 @@ class AutosApplicationTests {
         String[] makes = {"Ford", "Tesla", "Honda", "Toyota", "Audi", "BMW", "Nissan", "Chevrolet"};
         String[] models = {"Explorer", "Y", "Civic", "Corolla", "A3", "M3", "Altima", "Camaro"};
         int[] years = {2001, 2003, 2012, 2014, 2015, 2019, 2020, 2021};
-        Random r = new Random();
+
         for (int i = 0; i < 50; i++) {
             int random = r.nextInt(8);
             auto = new Auto(colors[r.nextInt(8)], makes[random], models[random], years[r.nextInt(8)], "AABBCC" + i);
@@ -64,6 +65,30 @@ class AutosApplicationTests {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
         assertThat(response.getBody()).isNull();
     }
+
+    @Test
+    void getAutos_withSearch_returnsAutosList() {
+        int random = r.nextInt(50);
+        String color = testAutos.get(random).getColor();
+        String make = testAutos.get(random).getMake();
+
+        ResponseEntity<AutosList> response = testRestTemplate.getForEntity(String.format("/api/autos?color=%s&make=%s", color, make), AutosList.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody().isEmpty()).isFalse();
+        assertThat(response.getBody().getAutosList().size()).isGreaterThanOrEqualTo(1);
+    }
+
+    @Test
+    void getAutos_withSearch_returnsEmptyAutosListWhenNoneFound() {
+        int random = r.nextInt(50);
+        String color = "purple";
+        String make = testAutos.get(random).getMake();
+
+        ResponseEntity<AutosList> response = testRestTemplate.getForEntity(String.format("/api/autos?color=%s&make=%s", color, make), AutosList.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+    }
+
+
 
 
 }
