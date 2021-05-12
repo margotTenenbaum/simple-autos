@@ -40,7 +40,7 @@ public class AutoService {
 
     public Auto updateAuto(String vin, String color, String owner) {
         Optional<Auto> auto = autosRepository.findByVin(vin);
-        if(auto == null) {
+        if(auto.isEmpty()) {
             return null;
         } else {
             auto.get().setColor(color);
@@ -49,7 +49,12 @@ public class AutoService {
         }
     }
 
-    public void deleteAuto(String vin) throws AutoNotFoundException {
-        return;
+    public void deleteAuto(String vin) {
+        Optional<Auto> auto = autosRepository.findByVin(vin);
+        if (auto.isPresent()) {
+            autosRepository.delete(auto.get());
+        } else {
+            throw new AutoNotFoundException();
+        }
     }
 }
