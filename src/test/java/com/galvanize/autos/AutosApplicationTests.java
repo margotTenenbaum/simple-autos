@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,7 +87,17 @@ class AutosApplicationTests {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
     }
 
+    @Test
+    void addAutos_returnsNewAutoAdded() {
+        Auto auto = new Auto("red", "Tesla", "X", 2018, "AABBCD");
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", MediaType.APPLICATION_JSON_VALUE);
+        HttpEntity<Auto> request = new HttpEntity<>(auto, headers);
 
+        ResponseEntity<Auto> response = testRestTemplate.postForEntity("/api/autos", request, Auto.class);
 
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody().getVin()).isEqualTo(auto.getVin());
+    }
 
 }
