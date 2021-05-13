@@ -4,15 +4,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/autos")
 public class AutosController {
     AutoService autoService;
 
-    public AutosController(AutoService autoSerivce) {
-        this.autoService = autoSerivce;
+    public AutosController(AutoService autoService) {
+        this.autoService = autoService;
     }
 
     @GetMapping
@@ -46,7 +44,6 @@ public class AutosController {
 
     @PatchMapping("/{vin}")
     public ResponseEntity<Auto> updateAuto(@PathVariable String vin, @RequestBody UpdateAuto update) {
-        //catch incorrect update obj
 
         Auto auto = autoService.updateAuto(vin, update.getColor(), update.getOwner());
         return auto == null ? ResponseEntity.noContent().build()
