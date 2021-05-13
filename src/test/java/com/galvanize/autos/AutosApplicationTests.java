@@ -100,4 +100,18 @@ class AutosApplicationTests {
         assertThat(response.getBody().getVin()).isEqualTo(auto.getVin());
     }
 
+    @Test
+    void getAutos_byVin_returnsAutoWhenValidVin() {
+        ResponseEntity<Auto> response = testRestTemplate.getForEntity("/api/autos/AABBCC1", Auto.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().getVin()).isEqualTo("AABBCC1");
+    }
+
+    @Test
+    void getAutos_byVin_returnsNoContentWhenInvalidVin() {
+        ResponseEntity<Auto> response = testRestTemplate.getForEntity("/api/autos/AABBCC51", Auto.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+        assertThat(response.getBody()).isNull();
+    }
 }
