@@ -14,6 +14,7 @@ public class Auto {
     private String model;
     private String owner;
     private int year;
+    @Column(unique = true)
     private String vin;
 
     public Auto() {
