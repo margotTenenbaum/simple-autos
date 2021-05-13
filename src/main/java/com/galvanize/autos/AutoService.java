@@ -39,7 +39,7 @@ public class AutoService {
 
     public Auto updateAuto(String vin, String color, String owner) {
         Optional<Auto> auto = autosRepository.findByVin(vin);
-        if(auto.isEmpty()) {
+        if(!auto.isPresent()) {
             return null;
         } else {
             auto.get().setColor(color);
