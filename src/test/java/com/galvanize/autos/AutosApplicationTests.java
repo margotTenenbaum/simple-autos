@@ -8,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -150,7 +149,6 @@ class AutosApplicationTests {
     void updateAuto_returnsBadRequestForInvalidBody() {
         HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
         testRestTemplate.getRestTemplate().setRequestFactory(requestFactory);
-//        UpdateAuto updateAuto = new UpdateAuto("purple");
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", MediaType.APPLICATION_JSON_VALUE);
         HttpEntity<Object> request = new HttpEntity<>("anything", headers);
@@ -158,5 +156,25 @@ class AutosApplicationTests {
         ResponseEntity<Auto> response = testRestTemplate.exchange("/api/autos/AABBCC1", HttpMethod.PATCH, request, Auto.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    void deleteAuto_returnAcceptedIfDeleted() {
+        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+        testRestTemplate.getRestTemplate().setRequestFactory(requestFactory);
+        ResponseEntity response = testRestTemplate.exchange("/api/autos/AABBCC1", HttpMethod.DELETE, new HttpEntity(""), Void.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.ACCEPTED);
+        assertThat(response.getBody()).isNull();
+    }
+
+    @Test
+    void deleteAuto_returnNoContentIfNotFound() {
+        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+        testRestTemplate.getRestTemplate().setRequestFactory(requestFactory);
+        ResponseEntity response = testRestTemplate.exchange("/api/autos/AABBCC51", HttpMethod.DELETE, new HttpEntity(""), Void.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+
     }
 }
