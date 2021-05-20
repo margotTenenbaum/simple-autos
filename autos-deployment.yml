@@ -13,7 +13,7 @@ spec:
         app: autos-david
     spec:
       containers:
-        - image: registry.gitlab.com/galv-vmw-apr-2021/2-simple-autos/elizabeth_david_siyun_autos:latest
+        - image: registry.gitlab.com/galv-vmw-apr-2021/2-simple-autos/elizabeth_david_siyun_autos:48
           name: autos-david
           imagePullPolicy: Always
           ports:
