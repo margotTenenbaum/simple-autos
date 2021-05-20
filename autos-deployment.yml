@@ -13,35 +13,39 @@ spec:
         app: autos-david
     spec:
       containers:
-        - image: $IMAGE
+        - image: registry.gitlab.com/galv-vmw-apr-2021/2-simple-autos/elizabeth_david_siyun_autos:latest
           name: autos-david
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
           env:
-            - name: DB_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: db-david
-                  key: db_host
-            - name: DB_NAME
-              valueFrom:
-                secretKeyRef:
-                  name: db_david
-                  key: db_name
-            - name: DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: db_david
-                  key: db_user
-            - name: DB_PWD
-              valueFrom:
-                secretKeyRef:
-                  name: db_david
-                  key: db_pwd
+#            - name: DB_HOST
+#              valueFrom:
+#                secretKeyRef:
+#                  name: db-david
+#                  key: db_host
+#            - name: DB_NAME
+#              valueFrom:
+#                secretKeyRef:
+#                  name: db_david
+#                  key: db_name
 #            - name: DB_USER
-#              value:
+#              valueFrom:
+#                secretKeyRef:
+#                  name: db_david
+#                  key: db_user
 #            - name: DB_PWD
-#              value:
+#              valueFrom:
+#                secretKeyRef:
+#                  name: db_david
+#                  key: db_pwd
+            - name: DB_HOST
+              value: 52.26.72.203
+            - name: DB_NAME
+              value: dlira
+            - name: DB_USER
+              value: dlira_user
+            - name: DB_PWD
+              value: 68Vna^-e6T3CY-z
       imagePullSecrets: # Be sure the token name matches what you created on K8s
         - name: k8s-token

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/autos")
+@CrossOrigin
 public class AutosController {
     AutoService autoService;
 
