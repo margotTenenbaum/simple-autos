@@ -74,5 +74,3 @@ deploy:
   script:
     - envsubst < autos-deployment.yml | kubectl apply -f -
     - kubectl apply -f autos-service.yml
-    - echo $CI_REGISTRY_IMAGE
-    - echo $CI_PIPELINE_IID
